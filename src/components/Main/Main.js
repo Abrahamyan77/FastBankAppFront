@@ -5,7 +5,7 @@ import axios from 'axios'
 const Main = () => {
     const [data, setData] = useState([])
     useEffect(() => {
-        axios.get('/demoDB')
+        axios.get('/credits')
             .then((res) => {
                 setData(res.data)
             })
@@ -13,44 +13,39 @@ const Main = () => {
     }, [])
 
     const [searchClientId, setSearchClientId] = useState("");
-    const [searchDate, setSearchDate] = useState("");
-    const [searchBranch, setSearchBranch] = useState("");
-    const [filteredApplications, setFilteredApplications] = useState(data);
     const [searchStatus, setSearchStatus] = useState("");
+    const [searchBranch, setSearchBranch] = useState("");
+    const [searchStartDate, setSearchStartDate] = useState("");
+    const [searchEndDate, setSearchEndDate] = useState("");
+    const [filteredApplications, setFilteredApplications] = useState([]);
 
-    // All Searches 
+    const [loading, setLoading] = useState(false);
 
-    const handleCombinedFilter = () => {
-        let filtered = data;
+    const handleCombinedFilter = async () => {
+        setLoading(true);
+        try {
+            const params = {
+                ClientID: searchClientId,
+                Status: searchStatus,
+                Branch: searchBranch,
+                StartDate: searchStartDate,
+                EndDate: searchEndDate
+            };
+            const response = await axios.get(`/credits/?ClientID=${params.ClientID}&Status=${params.Status}&Branch=${params.Branch}&StartDate=${params.StartDate}&EndDate=${params.EndDate}`);
+            setFilteredApplications(response.data);
 
-        if (searchClientId.trim() !== "") {
-            filtered = filtered.filter(app =>
-                app.clientid.toLowerCase().includes(searchClientId.toLowerCase())
-            );
+
+            console.log(response.data);
+
+        } catch (error) {
+            console.log('Search error:', error);
+            setFilteredApplications([]);
+        } finally {
+            setLoading(false);
         }
-
-        if (searchDate.trim() !== "") {
-            filtered = filtered.filter(app => {
-                const appDate = app.applicationdate.slice(0, 10);
-                return appDate.includes(searchDate);
-            });
-        }
-
-        if (searchBranch.trim() !== "") {
-            filtered = filtered.filter(app =>
-                app.branch.toLowerCase().includes(searchBranch.toLowerCase())
-            );
-        }
-
-        if (searchStatus.trim() !== "") {
-            filtered = filtered.filter(app =>
-                app.status.toLowerCase().includes(searchStatus.toLowerCase())
-            );
-        }
-
-        setFilteredApplications(filtered);
     };
 
+    console.log(searchStartDate);
 
     return (
         <main>
@@ -66,38 +61,67 @@ const Main = () => {
                     />
                 </div>
                 <div>
-                    <label className='label_all'> Ըստ ամսաթվի</label>
+                    <label className='label_all'> Ստեղծման ամսաթվի</label>
                     <input
                         type="date"
                         className='inp_client-id search-input inp_client-date'
-                        value={searchDate}
-                        onChange={(e) => setSearchDate(e.target.value)}
+                        value={searchStartDate}
+                        onChange={(e) => setSearchStartDate(e.target.value)}
                     />
 
                 </div>
                 <div>
-                    <label className='label_all'> Ըստ մասնաճյուղի</label>
+                    <label className='label_all'>Ավարտի ամսաթվի</label>
                     <input
-                        type="text"
-                        placeholder="Enter Branch"
+                        type="date"
+                        className='inp_client-id search-input inp_client-date'
+                        value={searchEndDate}
+                        onChange={(e) => setSearchEndDate(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label className='label_all'> Ըստ մասնաճյուղի</label>
+                    <select
                         className='inp_client-id search-input inp_branch'
                         value={searchBranch}
                         onChange={(e) => setSearchBranch(e.target.value)}
-                    />
+                    >
+                        <option value="">Select Branch</option>
+                        <option value="Արմավիր">Արմավիր</option>
+                        <option value="Երևան Մալաթիա">Երևան Մալաթիա</option>
+                        <option value="Երևան Կենտրոն">Երևան Կենտրոն</option>
+                        <option value="Գյումրի">Գյումրի</option>
+                        <option value="Էջմիածին">Էջմիածին</option>
+                        <option value="Արմավիր">Արմավիր</option>
+                        <option value="Վանաձոր">Վանաձոր</option>
+                        <option value="Էջմիածին">Էջմիածին</option>
+                        <option value="Վանաձոր">Վանաձոր</option>
+                    </select>
 
                 </div>
                 <div>
                     <label className='label_all'> Ըստ կարգավիճակի</label>
-                    <input
-                    className='inp_client-id search-input inp_status'
-                        type="text"
-                        placeholder="Status"
+                    <select
+                        className='inp_client-id search-input inp_status'
                         value={searchStatus}
                         onChange={(e) => setSearchStatus(e.target.value)}
-                    />
+                    >
+                        <option value="">Select Status</option>
+                        <option value="New">New</option>
+                        <option value="In Process">In Process</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Canceled">Canceled</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Approved">Approved</option>
+                    </select>
                 </div>
                 <div>
-                    <button onClick={handleCombinedFilter} className='search-btn'>Search</button>
+                    <button
+                        onClick={handleCombinedFilter}
+                        disabled={loading}
+                        className='search-btn'>
+                        {loading ? 'Searching...' : 'Search'}
+                    </button>
                 </div>
                 {
 
@@ -123,21 +147,21 @@ const Main = () => {
 
                         <tbody className='tbody_wrapper'>
                             {filteredApplications.map((item) => (
-                                <tr key={item.id}>
-                                    <td className='border_all'>{item.id}</td>
-                                    <td className='border_all'>{item.applicationid}</td>
-                                    <td className='border_all'>{item.clientid}</td>
-                                    <td className='border_all'>{item.branch}</td>
-                                    <td className='border_all'>{item.product}</td>
-                                    <td className='border_all'>{item.status}</td>
-                                    <td className='border_all'>{item.applicationdate.split("T")[0]}</td>
-                                    <td className='border_all'>{item.finaldecisiondate}</td>
-                                    <td className='border_all'>{item.phase1_start}</td>
-                                    <td className='border_all'>{item.phase1_end}</td>
-                                    <td className='border_all'>{item.phase2_start}</td>
-                                    <td className='border_all'>{item.phase2_end}</td>
-                                    <td className='border_all'>{item.phase3_start}</td>
-                                    <td className='border_all'>{item.phase3_end}</td>
+                                <tr key={item.ClientID}>
+                                    <td className='border_all'>{item.ClientID}</td>
+                                    <td className='border_all'>{item.ApplicationID}</td>
+                                    <td className='border_all'>{item.ClientID}</td>
+                                    <td className='border_all'>{item.Branch}</td>
+                                    <td className='border_all'>{item.Product}</td>
+                                    <td className='border_all'>{item.Status}</td>
+                                    <td className='border_all'>{item.ApplicationDate ? item.ApplicationDate.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.FinalDecisionDate ? item.FinalDecisionDate.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.Phase1_Start ? item.Phase1_Start.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.Phase1_End ? item.Phase1_End.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.Phase2_Start ? item.Phase2_Start.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.Phase2_End ? item.Phase2_End.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.Phase3_Start ? item.Phase3_Start.split('T')[0] : ''}</td>
+                                    <td className='border_all'>{item.Phase3_End ? item.Phase3_End.split('T')[0] : ''}</td>
                                 </tr>
                             ))}
                         </tbody>

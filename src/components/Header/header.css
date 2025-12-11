@@ -7,3 +7,32 @@
     height: 100px;
     background: linear-gradient(293deg, #212b7e, #212b7e 24.71%, #ba026f 70.57%, #84004e);
 }
+.header_inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+}
+
+.header_inner img {
+    height: 60px;
+    cursor: pointer;
+}
+
+.header_inner nav {
+    display: flex;
+    gap: 20px;
+}
+
+.header_inner nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.header_inner nav a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
