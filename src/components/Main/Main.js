@@ -51,14 +51,17 @@ const Main = () => {
         <main>
             <div className='container'>
                 <div>
-                    <label className='label_all'> Ըստ հաճախորդի</label>
-                    <input
-                        className='inp_client-id search-input'
-                        type="text"
-                        placeholder="Enter Client ID"
-                        value={searchClientId}
-                        onChange={(e) => setSearchClientId(e.target.value)}
-                    />
+                    <div className="form-group">
+                        <label className="form-label">Ըստ հաճախորդի</label>
+
+                        <input
+                            className="form-input"
+                            type="text"
+                            placeholder="Enter Client ID"
+                            value={searchClientId}
+                            onChange={(e) => setSearchClientId(e.target.value)}
+                        />
+                    </div>
                 </div>
                 <div>
                     <label className='label_all'> Ստեղծման ամսաթվի</label>
