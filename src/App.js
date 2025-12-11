@@ -1,12 +1,15 @@
 import './App.css';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
+import {  Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-        <Header />
-        <Main />
+      <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+        </Routes>
     </div>
   );
 }
