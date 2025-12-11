@@ -1,0 +1,9 @@
+.container{
+    width: min(90%, 1200px);
+    margin: 0 auto;
+}
+
+.header_wrapper{
+    height: 100px;
+    background: linear-gradient(293deg, #212b7e, #212b7e 24.71%, #ba026f 70.57%, #84004e);
+}
