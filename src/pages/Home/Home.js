@@ -4,14 +4,7 @@ import axios from 'axios'
 import SearchForm from '../../components/SearchForm/SearchForm';
 
 const Home = () => {
-    const [data, setData] = useState([])
-    useEffect(() => {
-        axios.get('/credits')
-            .then((res) => {
-                setData(res.data)
-            })
-            .catch((err) => console.log(err))
-    }, [])
+   
  const [filteredApplications, setFilteredApplications] = useState([]);
      
 

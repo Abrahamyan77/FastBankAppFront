@@ -3,6 +3,14 @@ import { useState } from 'react';
 import axios from 'axios'
 
 const SearchForm = ({ filteredApplications, setFilteredApplications }) => {
+     const [credits, setCredits] = useState([])
+    useEffect(() => {
+        axios.get('/credits')
+            .then((res) => {
+                setCredits(res.data)
+            })
+            .catch((err) => console.log(err))
+    }, [])
 
 
     const [searchClientId, setSearchClientId] = useState("");
