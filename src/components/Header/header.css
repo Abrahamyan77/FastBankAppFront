@@ -26,13 +26,14 @@
 
 .header_inner nav a {
     text-decoration: none;
-    color: white;
+    color: rgb(255 255 255);
     font-size: 20px;
     font-weight: 500;
     transition: color 0.2s ease;
+    opacity: 0.8;
 }
 
 .header_inner nav a:hover {
-    color: #007bff;
-    text-decoration: underline;
+    color: white;
+    opacity: 1;
 }
