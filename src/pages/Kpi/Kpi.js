@@ -1,20 +1,20 @@
 import './kpi.css';
-import { useState, useEffect } from 'react';
-import axios from 'axios'
+import  { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+
+const DEFAULT_COUNTS = {
+    Canceled: 0,
+    New: 0,
+    'In Process': 0,
+    Rejected: 0,
+    Approved: 0,
+};
+
+const KEYS = ['Canceled', 'New', 'In Process', 'Rejected', 'Approved'];
 
 const Kpi = () => {
+    const [status, setStatus] = useState([]);
 
-    const [status, setStatus] = useState([])
-
-    const defaultCounts = {
-        Canceled: 0,
-        New: 0,
-        'In Process': 0,
-        Rejected: 0,
-        Approved: 0,
-    };
-
-    const keys = ['Canceled', 'New', 'In Process', 'Rejected', 'Approved'];
     useEffect(() => {
         axios.get('/kpi/status')
             .then((res) => {
@@ -23,12 +23,15 @@ const Kpi = () => {
             .catch((err) => console.log(err))
     }, [])
 
-    const [displayValues, setDisplayValues] = useState(defaultCounts);
+    const [displayValues, setDisplayValues] = useState(DEFAULT_COUNTS);
+    const displayValuesRef = useRef(displayValues);
+
+    useEffect(() => { displayValuesRef.current = displayValues; }, [displayValues]);
 
     useEffect(() => {
-        const targets = (status && Object.keys(status).length) ? status : defaultCounts;
+        const targets = (status && Object.keys(status).length) ? status : DEFAULT_COUNTS;
         const duration = 900;
-        const startValues = { ...displayValues };
+        const startValues = { ...displayValuesRef.current };
         const startTime = performance.now();
         let rafId = null;
 
@@ -36,7 +39,7 @@ const Kpi = () => {
             const t = Math.min(1, (now - startTime) / duration);
             const eased = 1 - Math.pow(1 - t, 3);
             const next = {};
-            keys.forEach((k) => {
+            KEYS.forEach((k) => {
                 const s = Number(startValues[k] ?? 0);
                 const e = Number(targets[k] ?? 0);
                 next[k] = Math.round(s + (e - s) * eased);
@@ -112,7 +115,7 @@ const Kpi = () => {
                     <h1 className='kpi_title'>KPI արժեքներ </h1>
                 </div>
                 <div className='kpi_content-wrapper'>
-                    {keys.map((key) => (
+                    {KEYS.map((key) => (
                         <div className='kpi_card' key={key}>
                             <div className='kpi_card-title'>{key}</div>
                             <div className='kpi_card-value'>{displayValues[key]}</div>
