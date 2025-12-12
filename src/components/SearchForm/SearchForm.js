@@ -1,24 +1,23 @@
 import './searchForm.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'
 
 const SearchForm = ({ filteredApplications, setFilteredApplications }) => {
-     const [credits, setCredits] = useState([])
+    const [clients, setClients] = useState([])
     useEffect(() => {
-        axios.get('/credits')
+        axios.get('/clients')
             .then((res) => {
-                setCredits(res.data)
+                setClients(res.data)
             })
             .catch((err) => console.log(err))
     }, [])
-
 
     const [searchClientId, setSearchClientId] = useState("");
     const [searchStatus, setSearchStatus] = useState("");
     const [searchBranch, setSearchBranch] = useState("");
     const [searchStartDate, setSearchStartDate] = useState("");
     const [searchEndDate, setSearchEndDate] = useState("");
-   
+
     const [loading, setLoading] = useState(false);
 
     const handleCombinedFilter = async () => {
@@ -41,18 +40,27 @@ const SearchForm = ({ filteredApplications, setFilteredApplications }) => {
     };
 
     return (
-        <>
+        <div className='form_wrapper'>
+            <div className='form_header'>
+                <h2 className='search-form-title'>Վարկային հոսքագծի տվյալների բազա </h2>
+            </div>
             <div className="form-group">
                 <div>
                     <label className="form-label">Ըստ հաճախորդի</label>
-                    <input
+                    <select
                         className="form-input"
-                        type="text"
-                        placeholder="Enter Client ID"
                         value={searchClientId}
                         onChange={(e) => setSearchClientId(e.target.value)}
-                    />
+                    >
+                        <option value="">Select Client</option>
+                        {clients.map((client) => (
+                            <option key={client} value={client}>
+                                {client}
+                            </option>
+                        ))}
+                    </select>
                 </div>
+
                 <div>
                     <label className='form-label label_all'> Ըստ մասնաճյուղի</label>
                     <select
@@ -115,7 +123,7 @@ const SearchForm = ({ filteredApplications, setFilteredApplications }) => {
                     {loading ? 'Searching...' : 'Search'}
                 </button>
             </div>
-        </>
+        </div>
     );
 }
 export default SearchForm;

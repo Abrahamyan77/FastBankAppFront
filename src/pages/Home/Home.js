@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './home.css';
-import axios from 'axios'
 import SearchForm from '../../components/SearchForm/SearchForm';
 
 const Home = () => {
-   
- const [filteredApplications, setFilteredApplications] = useState([]);
-     
+  const [filteredApplications, setFilteredApplications] = useState([]);
 
     return (
         <main>
             <div className='container'>
                 <SearchForm  filteredApplications={filteredApplications} setFilteredApplications={setFilteredApplications} />
-            
                 {
                     <table className='table_wrapper'>
                         <thead className='tbody_wrapper' >

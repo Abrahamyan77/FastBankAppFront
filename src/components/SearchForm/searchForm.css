@@ -1,0 +1,188 @@
+.form_wrapper {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.form_header {
+    background: linear-gradient(135deg, #0066ff 0%, #004bbf 100%);
+    padding: 18px 8px;
+    border-radius: 8px;
+    margin: -20px -20px 20px -20px;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.form_header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(100px, -100px);
+}
+
+.form_header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transform: translate(-50px, 50px);
+}
+
+.search-form-title {
+    margin: 0;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.form-group {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 15px;
+  width: 300px;
+  padding: 10px 0;
+
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-left: 2px;
+  letter-spacing: 0.2px;
+}
+
+label {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+
+.form-input {
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s ease;
+  background: #fafafa;
+  width: 190px;
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.form-input:hover {
+  border-color: #9b9b9b;
+}
+
+.form-input:focus {
+  border-color: #0066ff;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+}
+
+input[type="text"],
+input[type="date"],
+input,
+select,
+textarea,
+.form-input,
+.search-input {
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.18s ease;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #9b9b9b;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #0066ff;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
+}
+
+.border_all {
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.inp_client-id {
+  margin: 0 10px;
+}
+
+.search-input {
+  width: 190px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.search-input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+}
+
+.search-btn {
+  padding: 8px 20px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.search-btn:hover {
+  background: #3a7ac4;
+}
+
+.label_all {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-right: 12px;
+}
+
+.inp_branch {
+  margin-left: 2px;
+}
